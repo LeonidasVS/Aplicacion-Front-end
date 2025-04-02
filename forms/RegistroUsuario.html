@@ -48,6 +48,20 @@
                 </div>
             </div>
 
+            <!-- Select para rol -->
+            <div class="form-group">
+                <label for="role" class="form-label">Selecciona tu rol</label>
+                <select name="role" id="role" class="form-control" required aria-describedby="role-error">
+                    <option value="" disabled selected>Selecciona un rol</option>
+                    <option value="admin">Admin</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="emprendedor">Emprendedor</option>
+                </select>
+                <div id="role-error" class="invalid-feedback">
+                    Por favor, selecciona un rol.
+                </div>
+            </div>
+
             <!-- Foto de perfil -->
             <div class="form-group">
                 <label for="profilePic" class="form-label">Foto de perfil</label>
