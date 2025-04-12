@@ -1,4 +1,4 @@
-# Proyecto: PoryectoCatedraPrograIII - Frontend
+# ProyectoCatedraPrograIII - Frontend
 
 ## Descripción
 
