@@ -1,0 +1,44 @@
+body {
+  height: 100vh;
+  background-color: #dfdddd;
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto;
+}
+
+.card-custom {
+  max-width: 900px;
+  height: 450px;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-custom .left {
+  background: url("https://images.unsplash.com/photo-1604719312566-8912e9227c6a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGllbmRhJTIwZGUlMjBjb21pZGF8ZW58MHx8MHx8fDA%3D")
+    center/cover no-repeat;
+  color: white;
+}
+
+.card-custom .left h1 {
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+}
+
+h2 {
+  font-weight: 550;
+}
+@media (max-width: 768px) {
+  .card-custom {
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .card-custom .left {
+    height: 250px;
+  }
+
+  .card-custom .left h1 {
+    font-size: 1.5rem;
+  }
+}

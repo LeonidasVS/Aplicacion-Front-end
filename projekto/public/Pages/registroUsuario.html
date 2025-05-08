@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../assets/img/computadora-portatil.png">
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.css">
+    <!-- Google Fonts (para un estilo similar a Google) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Registro.css">
+    <title>Crear Cuenta | Publikalo SV</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+    <div class="register-container">
+        <h2>¡Crea tu perfil de usuario!</h2>
+        <p>Regístrate para comenzar a disfrutar de nuestros servicios.</p>
+        <form id="registerForm" novalidate>
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="name" class="form-label">Nombre completo</label>
+                <input type="text" class="form-control" id="name" placeholder="Nombre y Apellido" required
+                    aria-describedby="name-error">
+                <div id="name-error" class="invalid-feedback">
+                    Por favor, ingresa tu nombre completo.
+                </div>
+            </div>
+
+            <!-- Correo -->
+            <div class="form-group">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" placeholder="micorreo@gmail.com" required
+                    aria-describedby="email-error">
+                <div id="email-error" class="invalid-feedback">
+                    Por favor, ingresa un correo válido.
+                </div>
+            </div>
+
+            <!-- Contraseña -->
+            <div class="form-group">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required
+                    aria-describedby="password-error">
+                <div id="password-error" class="invalid-feedback">
+                    La contraseña debe tener al menos 8 caracteres.
+                </div>
+            </div>
+
+            <!-- Select para rol -->
+            <div class="form-group">
+                <label for="role" class="form-label">Selecciona tu rol</label>
+                <select name="role" id="role" class="form-control" required aria-describedby="role-error">
+                    <option value="" disabled selected>Selecciona un rol</option>
+                    <option value="admin">Administrador</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="emprendedor">Emprendedor</option>
+                </select>
+                <div id="role-error" class="invalid-feedback">
+                    Por favor, selecciona un rol.
+                </div>
+            </div>
+
+            <!-- Foto de perfil -->
+            <div class="form-group">
+                <label for="profilePic" class="form-label">Foto de perfil</label>
+                <input type="file" class="form-control" id="profilePic" accept="image/*"
+                    aria-describedby="profilePic-error">
+                <img id="profilePicPreview" class="profile-pic-preview" alt="Vista previa de la foto de perfil">
+                <div id="profilePic-error" class="invalid-feedback">
+                    Por favor, selecciona una imagen válida.
+                </div>
+            </div>
+
+            <!-- Botón de enviar -->
+            <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <small class="text-muted">¿Ya tienes una cuenta? <a href="./Login.html" class="text-primary">Inicia
+                    sesión</a></small>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="../vendor/bootstrap/js/bootstrap.js">
+</body>
+
+</html>
