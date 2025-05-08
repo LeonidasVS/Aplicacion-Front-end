@@ -1,13 +1,19 @@
 function isNormalUser() {
   let storage = JSON.parse(localStorage.getItem("user"));
-  let fotoPerfil = null;
 
-  if (storage.picture == null) {
-    fotoPerfil =
-      "https://i.pinimg.com/236x/31/ec/2c/31ec2ce212492e600b8de27f38846ed7.jpg";
-  } else {
-    fotoPerfil = storage.picture;
+  // Validar y obtener la imagen
+  let userPicture =
+    storage && storage.picture && storage.picture.trim() !== ""
+      ? storage.picture
+      : "https://i.pinimg.com/236x/31/ec/2c/31ec2ce212492e600b8de27f38846ed7.jpg";
+
+  // (Opcional) Guardar la imagen por defecto en localStorage si no existía
+  if (!storage || !storage.picture || storage.picture.trim() === "") {
+    storage = storage || {};
+    storage.picture = userPicture;
+    localStorage.setItem("user", JSON.stringify(storage));
   }
+
   //obtenemos los valores de la autenticacion de google por que los vamos a ocupar
   //Creacion de fecha hora de creacion
   const fechaActual = new Date();
@@ -16,7 +22,7 @@ function isNormalUser() {
     nombre: storage.name,
     correo: storage.email,
     contraseña: "",
-    fotoPerfil: fotoPerfil,
+    fotoPerfil: userPicture,
     nit: "",
     tipoUsuarioId: 1,
     fechaRegistro: fechaISO,

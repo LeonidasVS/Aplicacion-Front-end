@@ -34,14 +34,27 @@ function loadUserProfile() {
         const nameEl = document.getElementById("name-user");
         const pictureEl = document.getElementById("picture-profile");
 
-        if (nameEl) nameEl.textContent = data.user.name;
+        const defaultPhoto =
+          "https://i.pinimg.com/236x/31/ec/2c/31ec2ce212492e600b8de27f38846ed7.jpg"; // Asegúrate de tener esta imagen en tu proyecto
+
+        if (nameEl && data.user.name) {
+          nameEl.textContent = data.user.name;
+        }
+
         if (pictureEl) {
-          const img = new Image();
-          img.src = data.user.picture;
-          img.onload = () => (pictureEl.src = data.user.picture);
-          img.onerror = () =>
-            (pictureEl.src =
-              "https://i.pinimg.com/236x/31/ec/2c/31ec2ce212492e600b8de27f38846ed7.jpg");
+          const photoURL = data.user.picture;
+
+          // Si hay una foto válida, usarla; si no, asignar imagen por defecto
+          pictureEl.src =
+            photoURL && photoURL.trim() !== "" ? photoURL : defaultPhoto;
+
+          // Fallback si la imagen no se carga correctamente
+          pictureEl.onerror = () => {
+            console.error(
+              "Error cargando la imagen, usando imagen por defecto"
+            );
+            pictureEl.src = defaultPhoto;
+          };
         }
       } else {
         localStorage.clear();
