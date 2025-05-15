@@ -1,0 +1,103 @@
+:root {
+  --naranja: #e87532;
+  --azul: #1e3a5f;
+
+  --naranja-hover: #cf6326;
+  --bg-light: #edecec;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--bg-light);
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-container {
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--naranja);
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  color: #7f7f7f;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+.card-custom {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 15px 30px var(--shadow-color);
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  height: 100%;
+}
+
+.card-custom:hover {
+  transform: scale(1.03);
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+  font-size: 4rem;
+  color: var(--naranja);
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.card-text {
+  color: #666;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.btn-naranja {
+  background-color: var(--azul);
+  /* Corregido */
+  color: white;
+  padding: 0.8rem 2rem;
+  font-weight: 500;
+  border-radius: 20px;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1);
+}
+
+.btn-naranja:hover {
+  background-color: var(--naranja);
+  transform: scale(1.05);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Asegura que las cards se mantengan separadas y centradas */
+.d-flex {
+  gap: 3rem;
+}
+
+/* Flex para móvil */
+@media (max-width: 768px) {
+  .d-flex {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}

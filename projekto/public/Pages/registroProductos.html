@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Publikalo SV</title>
+  <!-- Favicons -->
+  <link href="img/computadora-portatil.png" rel="icon">
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Questrial:wght@400&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="vendor/aos/aos.css" rel="stylesheet">
+  <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Main CSS File -->
+  <link href="css/main.css" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div
+      class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <h1 class="sitename">Publikalo</i></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/home">Home</a></li>
+          <li id="emprendedor"><a href="/registroProduct" class="active">Crear Producto</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <div class="header-social-links">
+        <button onclick="signOut()" class="btn btn-outline-light"><img class="picture-profile" id="picture-profile"
+            src="" alt="Foto"><span class="close-sesion">Cerrar
+            Sesion</span></button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container mt-5 mb-5">
+      <div class="card shadow-lg p-4 rounded-4 rounded" style="background-color: white; ">
+        <h4 class="mb-4 form-title">Registrar Producto</h4>
+        <form id="formProducto">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control rounded-3" id="nombre" name="nombre" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" class="form-control rounded-3" id="precio" name="precio" step="0.01" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="foto" class="form-label">Foto (URL)</label>
+            <input id="fileInput" type="file" class="form-control" accept="image/*">
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control rounded-3" id="descripcion" name="descripcion" rows="3" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="marca" class="form-label">Marca</label>
+            <input type="text" class="form-control rounded-3" id="marca" name="marca" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="estado" class="form-label">Disponible</label>
+            <select class="form-select rounded-3" id="estado" name="estado" required>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+
+          <a href="#" onclick="guardarProducto()" class="btn btn-primary agregarTienda">Registrar Producto <i
+              class="bi bi-check2-circle"></i></a>
+        </form>
+      </div>
+    </div>
+
+
+
+  </main>
+
+  <footer id="footer" class="footer">
+
+    <div class="container">
+      <div class="copyright text-center ">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">UNAB</strong> <span>Chalatenango</span>
+        </p>
+      </div>
+      <div class="credits">
+        Diseñador por<strong> estudiantes de Ingenieria En Sistemas y Computacion</strong>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/aos/aos.js"></script>
+  <script src="vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="vendor/swiper/swiper-bundle.min.js"></script>
+  <!-- Main JS File -->
+  <script src="../js/components/productoInsert.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/LoginGoogle.js"></script>
+
+</body>
+
+</html>

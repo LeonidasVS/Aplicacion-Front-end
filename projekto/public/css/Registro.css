@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-image: url("https://cdn.pixabay.com/photo/2024/05/07/21/48/rain-8746900_1280.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-container {
+  backdrop-filter: blur(60px);
+  border-radius: 15px;
+  box-shadow: 0 2px 40px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 430px;
+  width: 100%;
+}
+
+.register-container h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+}
+
+.register-container p {
+  font-size: 0.9rem;
+  color: #c4c4c4;
+  margin-bottom: 0.7rem;
+  text-align: center;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.form-control,
+.form-control-file {
+  border-radius: 4px;
+  border: 1px solid #dadce0;
+  font-size: 0.875rem;
+  padding: 0.7rem;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 1px #ff6f61;
+  outline: none;
+}
+
+.invalid-feedback {
+  font-size: 0.75rem;
+}
+
+.btn-primary {
+  background: #d05f1e;
+  border: none;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #ff5e00;
+}
+
+.profile-pic-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.text-primary {
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+.text-primary:hover {
+  text-decoration: underline;
+}
+.text-muted {
+  color: #abaaaa !important;
+}
+
+@media (max-width: 920px) {
+  .register-container {
+    max-width: 350px;
+  }
+  .register-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .register-container p {
+    font-size: 0.6rem;
+  }
+
+  .form-label {
+    font-size: 0.875rem;
+  }
+
+  .form-control,
+  .form-control-file {
+    padding: 0.3rem;
+  }
+  .btn-primary {
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .register-container {
+    max-width: 290px;
+  }
+  .register-container h2 {
+    font-size: 1.3rem;
+  }
+
+  .register-container p {
+    font-size: 0.6rem;
+  }
+
+  .form-label {
+    font-size: 0.7rem;
+  }
+
+  .form-control,
+  .form-control-file {
+    padding: 0.2rem;
+  }
+  .btn-primary {
+    padding: 0.5rem;
+  }
+}

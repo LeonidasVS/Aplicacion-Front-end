@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Publikalo SV</title>
+  <!-- Favicons -->
+  <link href="img/computadora-portatil.png" rel="icon">
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Questrial:wght@400&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="vendor/aos/aos.css" rel="stylesheet">
+  <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Main CSS File -->
+  <link href="css/main.css" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div
+      class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <h1 class="sitename">Publikalo</i></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/home" class="active">Home</a></li>
+          <li><a href="#tiendas">Tiendas</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li id="emprendedor"><a href="/registroStore">Crear Publicacion</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <div class="header-social-links">
+        <button onclick="signOut()" class="btn btn-outline-light"><img class="picture-profile" id="picture-profile"
+            src="" alt="Foto"><span class="close-sesion">Cerrar
+            Sesion</span></button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="primerBloque">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row align-items-center content">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+              <h2>¡Bienvenido <span id="name-user"></span>! Conecta Con Clientes y Haz Crecer Tu Emprendimiento🚀</h2>
+              <p class="lead">¿Eres emprendedor? Publica tus productos, consigue más clientes y lleva tu negocio al
+                siguiente nivel. Aquí encontrarás reseñas, comparaciones y herramientas para destacar. 📢 🛒
+              </p>
+              <div id="emprendedorbutton" class="cta-buttons" data-aos="fade-up" data-aos-delay="300">
+                <a href="#portfolio" class="btn btn-primary">Bienvenidos usuario</a>
+                <a href="#contact" class="btn btn-outline">Saber mas de</a>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="hero-image">
+                <img
+                  src="img/edificio-tiendas-zapatillas-vector-dibujos-animados-productos-zapatillas_1080480-122784-Photoroom.png"
+                  alt="Portfolio Hero Image" class="img-fluid" data-aos="zoom-out" data-aos-delay="300">
+                <div class="shape-1"></div>
+                <div class="shape-2"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Portfolio Section -->
+      <section id="tiendas" class="portfolio">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Tiendas</h2>
+          <div class="title-shape">
+            <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,10 C 40,0 60,20 100,10 C 140,0 160,20 200,10" fill="none" stroke="currentColor"
+                stroke-width="2"></path>
+            </svg>
+          </div>
+          <p>Explora una amplia variedad de tiendas con productos de calidad para todos los gustos. Desde ropa y
+            accesorios, hasta supermercados con todo lo que necesitas. ¡Revisa las tiendas ingresadas!</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+            <div class="portfolio-filters-container" data-aos="fade-up" data-aos-delay="200">
+              <ul id="filterStore" class="portfolio-filters isotope-filters">
+                <li data-filter="*" class="filter-active">All Work</li>
+                <li data-filter=".filter-web">Web Design</li>
+                <li data-filter=".filter-graphics">Graphics</li>
+                <li data-filter=".filter-motion">Motion</li>
+                <li data-filter=".filter-brand">Branding</li>
+              </ul>
+            </div>
+
+            <div id="tiendas-container" class="row g-4 isotope-container" data-aos="fade-up" data-aos-delay="300">
+
+            </div><!-- End Portfolio Container -->
+
+          </div>
+
+        </div>
+
+      </section><!-- /Portfolio Section -->
+
+      <!-- Services Section -->
+      <section id="servicios" class="services">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Servicios</h2>
+          <div class="title-shape">
+            <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 0,10 C 40,0 60,20 100,10 C 140,0 160,20 200,10" fill="none" stroke="currentColor"
+                stroke-width="2"></path>
+            </svg>
+          </div>
+          <p>Conecta con los mejores servicios disponibles en tu zona, desde reparaciones y asesorías, hasta salud,
+            belleza y mucho más. Encuentra fácilmente lo que necesitas, con opciones confiables y a solo unos clics de
+            distancia.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row align-items-center">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+              <h2 class="fw-bold mb-4 servies-title">Conecta con los servicios que las tiendas brindan!</h2>
+              <p class="mb-4">Desde envíos rápidos y reparaciones, hasta asesoría personalizada y atención al cliente,
+                accede a todos los servicios que las tiendas ofrecen, de forma fácil, rápida y confiable.</p>
+              <a href="https://www.facebook.com/share/1ALofdRiXq/" class="btn btn-outline-primary">Mas informacion</a>
+            </div>
+            <div class="col-lg-8">
+              <div class="row g-4">
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                  <div class="service-item">
+                    <i class="bi bi-activity icon"></i>
+                    <h3><a href="service-details.html">Reparaciones a domicilio</a></h3>
+                    <p>Soluciona problemas de plomería, electricidad, electrodomésticos y más sin salir de casa.
+                      Técnicos confiables y servicio garantizado.</p>
+                  </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                  <div class="service-item">
+                    <i class="bi bi-easel icon"></i>
+                    <h3><a href="service-details.html">Servicios de belleza</a></h3>
+                    <p>Agenda cortes de cabello, maquillaje, uñas y otros servicios de estética, en tienda o a
+                      domicilio.</p>
+                  </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                  <div class="service-item">
+                    <i class="bi bi-broadcast icon"></i>
+                    <h3><a href="service-details.html"> Soporte técnico</a></h3>
+                    <p>¿Tu celular o computadora necesita ayuda? Encuentra asistencia especializada cerca de ti.</p>
+                  </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
+                  <div class="service-item">
+                    <i class="bi bi-bounding-box-circles icon"></i>
+                    <h3><a href="service-details.html">Asesoría personalizada</a></h3>
+                    <p>Consultas con expertos en moda, tecnología, salud o administración. Ideal para tomar mejores
+                      decisiones de compra.</p>
+                  </div>
+                </div><!-- End Service Item -->
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section><!-- /Services Section -->
+
+  </main>
+
+  <footer id="footer" class="footer">
+
+    <div class="container">
+      <div class="copyright text-center ">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">UNAB</strong> <span>Chalatenango</span>
+        </p>
+      </div>
+      <div class="credits">
+        Diseñador por<strong> estudiantes de Ingenieria En Sistemas y Computacion</strong>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/aos/aos.js"></script>
+  <script src="vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="vendor/swiper/swiper-bundle.min.js"></script>
+  <!-- Main JS File -->
+  <script src="../js/components/dashboard.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/LoginGoogle.js"></script>
+
+
+</body>
+
+</html>
