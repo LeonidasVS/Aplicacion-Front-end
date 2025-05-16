@@ -154,8 +154,14 @@ function retryLoadProducts() {
 window.onload = function () {
   const params = new URLSearchParams(window.location.search);
   let idTienda = params.get("id");
+  let elemento = document.getElementById("crearProducto");
+  let elemento2 = document.getElementById("emprendedor");
 
   // Si no hay id en la URL, intenta usar localStorage
+  if (localStorage.getItem("tipo") == 1) {
+    elemento.style.visibility = "hidden";
+    elemento2.style.visibility = "hidden";
+  }
   if (!idTienda) {
     idTienda = localStorage.getItem("idTienda");
   } else {

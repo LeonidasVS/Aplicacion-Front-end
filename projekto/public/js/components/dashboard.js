@@ -194,7 +194,9 @@ function loadStore() {
 //metodo verficacion de tiendas con el usuario
 
 async function LoadRegistro(idTienda) {
-  if (localStorage.getItem("tipo") != 1) {
+  if (localStorage.getItem("tipo") == 1) {
+    window.location.href = `/ShowProduct?id=${idTienda}`;
+  } else if (localStorage.getItem("tipo") == 2) {
     try {
       // 1. Obtener correo desde localStorage
       const user = JSON.parse(localStorage.getItem("user"));
@@ -218,13 +220,13 @@ async function LoadRegistro(idTienda) {
       const resTienda = await fetch(
         `https://localhost:7194/api/Tienda/ObtenerPorId/${idTienda}`
       );
+
       if (!resTienda.ok) throw new Error("No se pudo obtener la tienda.");
       const tienda = await resTienda.json();
 
       // 4. Comparar el usuarioId de la tienda con el id del usuario actual
       if (tienda.usuarioId === usuario.id) {
         // Redirigir si pertenece al usuario
-
         window.location.href = `/ShowProduct?id=${idTienda}`;
       } else {
         Swal.fire({
