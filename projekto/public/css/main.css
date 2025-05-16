@@ -1553,3 +1553,7 @@ hr {
   opacity: 0.95;
   transform: translateY(-4px);
 }
+
+.eliminarTienda {
+  margin-top: 20px !important;
+}

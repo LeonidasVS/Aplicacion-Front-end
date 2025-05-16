@@ -1,255 +1,324 @@
-// Definir la función
+// Constantes de API
+const API_BASE = "https://localhost:7194/api";
 
-function hideElementeEmprendedor() {
-  const elemento = document.getElementById("emprendedor");
-  const elemento2 = document.getElementById("emprendedorbutton");
-  //const elemento3 = document.getElementById("buttonLoadRe");
-
-  if (localStorage.getItem("tipo") == 1) {
-    elemento.style.visibility = "hidden";
-    elemento2.style.visibility = "hidden";
-  }
+/**
+ * Realiza una petición GET y devuelve la respuesta JSON o lanza error.
+ * @param {string} endpoint - Ruta completa o relativa al recurso.
+ * @returns {Promise<any>}
+ */
+async function fetchJson(endpoint) {
+  const url = endpoint.startsWith("http")
+    ? endpoint
+    : `${API_BASE}/${endpoint}`;
+  const res = await fetch(url, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!res.ok) throw new Error(`Error en la respuesta: ${res.status}`);
+  return res.json();
 }
 
-//Cargar Tiendas
-function loadStore() {
-  const API_URL = "https://localhost:7194/api/Tienda/LeerTiendas";
-  const container = document.getElementById("tiendas-container");
-  const containerfilter = document.getElementById("filterStore");
+/**
+ * Muestra un SweetAlert de error.
+ * @param {string} title - Título de la alerta.
+ * @param {string} text - Texto descriptivo.
+ */
+function showErrorAlert(title, text) {
+  Swal.fire({
+    icon: "error",
+    title,
+    text,
+    timer: 2300,
+    timerProgressBar: true,
+    showConfirmButton: false,
+  });
+}
 
-  // Mostrar loader mientras se cargan los datos
-  container.innerHTML = `
-        <div class="col-12 text-center py-5">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Cargando...</span>
-            </div>
-            <p class="text-muted mt-2">Cargando tiendas...</p>
-        </div>
-    `;
+/**
+ * Muestra un SweetAlert de confirmación y ejecuta callbacks según la respuesta.
+ * @param {string} title
+ * @param {string} text
+ * @param {function} onConfirm
+ * @param {function} onCancel
+ */
+function showConfirmAlert(title, text, onConfirm, onCancel) {
+  Swal.fire({
+    icon: "question",
+    title,
+    text,
+    showCancelButton: true,
+    confirmButtonText: "Sí, continuar",
+    cancelButtonText: "No, cancelar",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) onConfirm();
+    else if (result.dismiss === Swal.DismissReason.cancel && onCancel)
+      onCancel();
+  });
+}
 
-  fetch(API_URL, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error en la respuesta: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((tiendas) => {
-      console.log("Tiendas recibidas:", tiendas);
-
-      // Limpiar contenedores
-      container.innerHTML = "";
-      containerfilter.innerHTML = "";
-
-      if (tiendas.length === 0) {
-        container.innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <i class="bi bi-shop fs-1 text-muted"></i>
-                    <p class="text-muted">No se encontraron tiendas disponibles.</p>
-                </div>
-            `;
-        return;
-      }
-
-      // Obtener categorías únicas
-      const categoriasUnicas = [
-        ...new Set(
-          tiendas.map((t) => t.tipoTiendaNombre?.trim().toLowerCase())
-        ),
-      ];
-
-      // Agregar botón "Todas"
-      const liTodos = document.createElement("li");
-      liTodos.textContent = "Todas";
-      liTodos.setAttribute("data-filter", "*");
-      liTodos.classList.add("filter-active", "filter-button");
-      containerfilter.appendChild(liTodos);
-
-      // Agregar filtros por categoría
-      categoriasUnicas.forEach((categoria) => {
-        const li = document.createElement("li");
-        li.textContent = categoria.charAt(0).toUpperCase() + categoria.slice(1);
-        const slug = "filter-" + categoria.replace(/\s+/g, "-");
-        li.setAttribute("data-filter", `.${slug}`);
-        li.classList.add("filter-button");
-        containerfilter.appendChild(li);
-      });
-
-      // Mostrar cada tienda
-      tiendas.forEach((tienda) => {
-        const categoriaClase =
-          "filter-" +
-          tienda.tipoTiendaNombre.toLowerCase().replace(/\s+/g, "-");
-        //creo que el error como eliminamos la categoria seria de obtener el id pasarlo a texto
-        const tiendaHTML = `
-                <div class="col-lg-6 col-md-6 portfolio-item isotope-item ${categoriaClase}">
-                    <div class="portfolio-card">
-                        <div class="portfolio-image">
-                            <img src="${
-                              "img/store/" + tienda.fotoFachada ||
-                              "img/services/services-1.webp"
-                            }" 
-                                 class="img-fluid" 
-                                 alt="${tienda.nombre}" 
-                                 loading="lazy"
-                                 onerror="this.src='img/services/services-1.webp'">
-                            <div class="portfolio-overlay">
-                                <div class="portfolio-actions">
-                                    <a href="${
-                                      "img/store/" + tienda.fotoFachada ||
-                                      "img/services/services-1.webp"
-                                    }" 
-                                       class="glightbox preview-link"
-                                       data-gallery="portfolio-gallery"
-                                       data-title="${tienda.nombre}"
-                                       data-description="${
-                                         tienda.slogan ||
-                                         "Descrube nuestros productos"
-                                       }">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a id="buttonLoadRe" href="javascript:void(0);" 
-                                    onclick="LoadRegistro('${tienda.id}')" 
-                                    class="details-link">
-                                      <i class="bi bi-arrow-right"></i>
-                                  </a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="portfolio-content">
-                            <span class="category">${
-                              tienda.tipoTiendaNombre || "General"
-                            }</span>
-                            <h3>${tienda.nombre}</h3>
-                            <p>${
-                              tienda.slogan ||
-                              "Descubre nuestros productos y servicios"
-                            }</p>
-                            <div class="store-info">
-                                <small><i class="bi bi-clock"></i> ${
-                                  tienda.horarioInicio
-                                } - ${tienda.horarioSalida}</small>
-                                ${
-                                  tienda.tieneEnvio
-                                    ? '<small class="ms-2"><i class="bi bi-truck"></i> Envíos disponibles</small>'
-                                    : ""
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        container.insertAdjacentHTML("beforeend", tiendaHTML);
-      });
-
-      // Inicializar GLightbox
-      if (typeof GLightbox !== "undefined") {
-        const lightbox = GLightbox({
-          selector: ".preview-link",
-          touchNavigation: true,
-          loop: true,
-        });
-      }
-
-      // Inicializar Isotope
-      if (typeof Isotope !== "undefined") {
-        const iso = new Isotope(container, {
-          itemSelector: ".portfolio-item",
-          layoutMode: "fitRows",
-          filter: "*",
-        });
-
-        // Eventos de filtro
-        containerfilter.querySelectorAll(".filter-button").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            containerfilter
-              .querySelectorAll("li")
-              .forEach((el) => el.classList.remove("filter-active"));
-            this.classList.add("filter-active");
-
-            const filtro = this.getAttribute("data-filter");
-            iso.arrange({ filter: filtro });
-          });
-        });
-      }
-    })
-    .catch((error) => {
-      console.error("Error obteniendo los datos:", error);
-      container.innerHTML = `
-            <div class="col-12 text-center py-5">
-                <i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
-                <p class="text-muted">Error al cargar las tiendas. Por favor intenta nuevamente.</p>
-                <button class="btn btn-primary mt-3" onclick="loadStore()">Reintentar</button>
-            </div>
-        `;
+/**
+ * Oculta elementos del menú "Emprendedor" si el usuario es tipo 1.
+ */
+function hideEmprendedorElements() {
+  const tipo = localStorage.getItem("tipo");
+  if (tipo === "1") {
+    ["emprendedor", "emprendedorbutton"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.style.visibility = "hidden";
     });
-}
-
-//metodo verficacion de tiendas con el usuario
-
-async function LoadRegistro(idTienda) {
-  if (localStorage.getItem("tipo") == 1) {
-    window.location.href = `/ShowProduct?id=${idTienda}`;
-  } else if (localStorage.getItem("tipo") == 2) {
-    try {
-      // 1. Obtener correo desde localStorage
-      const user = JSON.parse(localStorage.getItem("user"));
-
-      if (!user.email) {
-        throw new Error(
-          "No se encontró el correo del usuario en localStorage."
-        );
-      }
-
-      // 2. Obtener el usuario por correo
-      const resUsuario = await fetch(
-        `https://localhost:7194/api/Usuario/ObtenerPorEmail/${encodeURIComponent(
-          user.email
-        )}`
-      );
-      if (!resUsuario.ok) throw new Error("No se pudo obtener el usuario.");
-      const usuario = await resUsuario.json();
-
-      // 3. Obtener la tienda por ID
-      const resTienda = await fetch(
-        `https://localhost:7194/api/Tienda/ObtenerPorId/${idTienda}`
-      );
-
-      if (!resTienda.ok) throw new Error("No se pudo obtener la tienda.");
-      const tienda = await resTienda.json();
-
-      // 4. Comparar el usuarioId de la tienda con el id del usuario actual
-      if (tienda.usuarioId === usuario.id) {
-        // Redirigir si pertenece al usuario
-        window.location.href = `/ShowProduct?id=${idTienda}`;
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "¡Acceso Denegado!",
-          text: "Esta tienda no pertenece al usuario actual",
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-      }
-    } catch (error) {
-      console.error("Error en LoadRegistro:", error);
-      alert("Ocurrió un error al verificar la tienda.");
-    }
   }
 }
 
-// Llamar a la función cuando la página cargue
-window.onload = function () {
-  loadStore();
-  hideElementeEmprendedor();
-};
+/**
+ * Carga y renderiza todas las tiendas.
+ */
+async function loadStore() {
+  const container = document.getElementById("tiendas-container");
+  const filterList = document.getElementById("filterStore");
 
-//********************************* */
-//aqui hay un prblemas al mostrar tienda por que desaparecio columna categorias y solo tenemos el id seria de hacer una consultar inner par ados tablas
+  // Loader
+  container.innerHTML = `<div class="col-12 text-center py-5">
+    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div>
+    <p class="text-muted mt-2">Cargando tiendas...</p>
+  </div>`;
+
+  try {
+    const tiendas = await fetchJson("Tienda/LeerTiendas");
+    renderFiltersAndStores(tiendas, container, filterList);
+    initLightbox();
+    initIsotope(container, filterList);
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `<div class="col-12 text-center py-5">
+      <i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
+      <p class="text-muted">Error al cargar las tiendas. Por favor intenta nuevamente.</p>
+      <button class="btn btn-primary mt-3" onclick="loadStore()">Reintentar</button>
+    </div>`;
+  }
+}
+
+/**
+ * Genera filtros y tarjetas de tiendas.
+ * @param {Array} tiendas
+ * @param {HTMLElement} container
+ * @param {HTMLElement} filterList
+ */
+function renderFiltersAndStores(tiendas, container, filterList) {
+  container.innerHTML = "";
+  filterList.innerHTML = "";
+
+  if (tiendas.length === 0) {
+    container.innerHTML = `<div class="col-12 text-center py-5">
+      <i class="bi bi-shop fs-1 text-muted"></i>
+      <p class="text-muted">No se encontraron tiendas disponibles.</p>
+    </div>`;
+    return;
+  }
+
+  // Categorías únicas
+  const categorias = [
+    ...new Set(tiendas.map((t) => t.tipoTiendaNombre?.trim().toLowerCase())),
+  ];
+  addFilterItem("Todas", "*", filterList, true);
+  categorias.forEach((cat) =>
+    addFilterItem(capitalize(cat), `filter-${slugify(cat)}`, filterList)
+  );
+
+  // Tarjetas de tienda
+  tiendas.forEach((tienda) =>
+    container.insertAdjacentHTML("beforeend", createStoreCard(tienda))
+  );
+
+  // Eventos de filtro
+  filterList.querySelectorAll(".filter-button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterList
+        .querySelectorAll("li")
+        .forEach((li) => li.classList.remove("filter-active"));
+      btn.classList.add("filter-active");
+      const filtro = btn.getAttribute("data-filter");
+      window.iso.arrange({ filter: filtro });
+    });
+  });
+}
+
+/**
+ * Añade un elemento de filtro al DOM.
+ */
+function addFilterItem(text, filter, parent, active = false) {
+  const li = document.createElement("li");
+  li.textContent = text;
+  li.setAttribute(
+    "data-filter",
+    filter.startsWith("*") ? filter : `.${filter}`
+  );
+  li.classList.add("filter-button");
+  if (active) li.classList.add("filter-active");
+  parent.appendChild(li);
+}
+
+/**
+ * Crea el HTML para la tarjeta de una tienda.
+ * @param {object} tienda
+ * @returns {string}
+ */
+function createStoreCard(tienda) {
+  const catClass = `filter-${slugify(tienda.tipoTiendaNombre)}`;
+  const imgSrc = tienda.fotoFachada
+    ? `img/store/${tienda.fotoFachada}`
+    : "img/services/services-1.webp";
+  const tipoUsuario = localStorage.getItem("tipo");
+
+  // Solo usuarios tipo 2 ven el botón eliminar
+  const deleteButton =
+    tipoUsuario === "2"
+      ? `<button class="btn btn-danger eliminarTienda" onclick="eliminarTienda('${tienda.id}', '${tienda.nombre}')">
+         <i class="bi bi-trash3-fill"></i>
+       </button>`
+      : "";
+
+  return `
+    <div class="col-lg-6 col-md-6 portfolio-item isotope-item ${catClass}">
+      <div class="portfolio-card">
+        <div class="portfolio-image">
+          <img src="${imgSrc}" alt="${
+    tienda.nombre
+  }" loading="lazy" onerror="this.src='img/services/services-1.webp'">
+          <div class="portfolio-overlay">
+            <div class="portfolio-actions">
+              <a href="${imgSrc}" class="glightbox preview-link" data-gallery="portfolio-gallery" data-title="${
+    tienda.nombre
+  }" data-description="${tienda.slogan || "Descubre nuestros productos"}">
+                <i class="bi bi-eye"></i>
+              </a>
+              <a href="javascript:void(0);" onclick="loadRegistro('${
+                tienda.id
+              }')" class="details-link">
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-content">
+          <span class="category">${tienda.tipoTiendaNombre || "General"}</span>
+          <h3>${tienda.nombre}</h3>
+          <p>${tienda.slogan || "Descubre nuestros productos y servicios"}</p>
+          <div class="store-info">
+            <small><i class="bi bi-clock"></i> ${tienda.horarioInicio} - ${
+    tienda.horarioSalida
+  }</small>
+            ${
+              tienda.tieneEnvio
+                ? '<small class="ms-2"><i class="bi bi-truck"></i> Envíos disponibles</small>'
+                : ""
+            }
+          </div>
+          ${deleteButton}
+        </div>
+      </div>
+    </div>`;
+}
+
+/**
+ * Capitaliza la primera letra de un string.
+ */
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Convierte espacios en guiones y pasa a minúsculas.
+ */
+function slugify(str) {
+  return str.toLowerCase().replace(/\s+/g, "-");
+}
+
+/**
+ * Inicializa GLightbox para las vistas previas de imágenes.
+ */
+function initLightbox() {
+  if (typeof GLightbox !== "undefined") {
+    GLightbox({ selector: ".preview-link", touchNavigation: true, loop: true });
+  }
+}
+
+/**
+ * Inicializa Isotope para filtrado y guarda la instancia.
+ */
+function initIsotope(container, filterList) {
+  if (typeof Isotope !== "undefined") {
+    window.iso = new Isotope(container, {
+      itemSelector: ".portfolio-item",
+      layoutMode: "fitRows",
+      filter: "*",
+    });
+  }
+}
+
+/**
+ * Verifica y redirige a la vista de productos si el usuario pertenece a la tienda.
+ * @param {string} idTienda
+ */
+async function loadRegistro(idTienda) {
+  const tipo = localStorage.getItem("tipo");
+  if (tipo === "1")
+    return (window.location.href = `/ShowProduct?id=${idTienda}`);
+
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const usuario = await fetchJson(
+      `Usuario/ObtenerPorEmail/${encodeURIComponent(user.email)}`
+    );
+    const tienda = await fetchJson(`Tienda/ObtenerPorId/${idTienda}`);
+
+    if (tienda.usuarioId === usuario.id)
+      window.location.href = `/ShowProduct?id=${idTienda}`;
+    else
+      showErrorAlert(
+        "¡Acceso Denegado!",
+        "¡No puedes acceder a una tienda que no te pertenece...!"
+      );
+  } catch (err) {
+    console.error(err);
+    alert("Ocurrió un error al verificar la tienda.");
+  }
+}
+
+/**
+ * Confirma y elimina una tienda si el usuario es propietario.
+ * @param {string} idTienda
+ * @param {string} nombreTienda
+ */
+async function eliminarTienda(idTienda, nombreTienda) {
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const usuario = await fetchJson(
+      `Usuario/ObtenerPorEmail/${encodeURIComponent(user.email)}`
+    );
+    const tienda = await fetchJson(`Tienda/ObtenerPorId/${idTienda}`);
+
+    if (tienda.usuarioId !== usuario.id) {
+      return showErrorAlert(
+        "¡Acceso Denegado!",
+        "¡No puedes eliminar una tienda que no te pertenece...!"
+      );
+    }
+
+    showConfirmAlert(
+      `¿Deseas eliminar la tienda ${nombreTienda}?`,
+      "¡La tienda se eliminará completamente!",
+      async () => {
+        /* lógica de eliminación aquí */ console.log("Eliminando...");
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    showErrorAlert("Error", "No se pudo procesar la eliminación");
+  }
+}
+
+// Inicialización al cargar la página
+window.onload = () => {
+  hideEmprendedorElements();
+  loadStore();
+};
