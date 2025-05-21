@@ -9,7 +9,7 @@
 
 body {
   background-color: var(--bg-light);
-  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto;
   margin: 0;
   padding: 0;
   height: 100vh;

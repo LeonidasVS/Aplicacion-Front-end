@@ -308,7 +308,42 @@ async function eliminarTienda(idTienda, nombreTienda) {
       `¿Deseas eliminar la tienda ${nombreTienda}?`,
       "¡La tienda se eliminará completamente!",
       async () => {
-        /* lógica de eliminación aquí */ console.log("Eliminando...");
+        try {
+          const response = await fetch(
+            `https://localhost:7194/api/Tienda/EliminarTienda/${idTienda}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            // La petición se hizo, pero el servidor respondió con error
+            const errorData = await response.json();
+            console.error("Error al eliminar la tienda:", errorData);
+            alert(
+              `No se pudo eliminar la tienda. ${
+                errorData.message || "Error desconocido"
+              }`
+            );
+            return;
+          }
+          Swal.fire({
+            icon: "success",
+            title: "¡Tienda Eliminada Exitosamente!",
+            text: "La Tienda Ha sido Eliminada",
+            timer: 2300,
+            timerProgressBar: true,
+          });
+          window.onload();
+        } catch (error) {
+          console.error("Error en la petición:", error);
+          alert(
+            "Hubo un error al intentar eliminar la tienda. Verifica la conexión con el servidor."
+          );
+        }
       }
     );
   } catch (err) {
